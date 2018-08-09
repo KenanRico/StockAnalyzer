@@ -29,9 +29,15 @@ def downloadStockHistoryCSV(stock_name): #incomplete
 	#click on "download Data"
 
 	#move csv file to correct dir
-	print(browser.current_url)
+	url = browser.current_url
+	acronym_start = url.find("p=")+2
+	acronym_end = url.find("&")
+	file_name = url[acronym_start:acronym_end]+".csv"
+	print(file_name)
+	return "StockData/"+file_name
 
-def loadStockHistory():
+def loadStockHistory(csv_path): #incomplete
+	#
 	return []
 
 def splitTraining(history):
@@ -58,8 +64,8 @@ def plotModel(weight, bias): #incomplete
 	print("bias is", bias)
 
 def main():
-	downloadStockHistoryCSV("google")
-	stock_history = loadStockHistory()
+	csv_path = downloadStockHistoryCSV("IBM")
+	stock_history = loadStockHistory(csv_path)
 	training_set = splitTraining(stock_history) #0~0.5
 	validation_set = splitValidation(stock_history) #0.5~0.7
 	test_set = splitTest(stock_history)
